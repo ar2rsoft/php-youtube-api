@@ -20,6 +20,8 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     protected $youtube;
     protected $optionParams;
 
+    protected $parts = 'id, snippet';
+
     public function setUp()
     {
         // !!!!! DO NOT USE THIS API KEY FOR PRODUCTION USE !!!!! */
@@ -81,13 +83,13 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     {
         $this->youtube = new Youtube(array('key' => 'nonsense'));
         $vID = 'rie-hPVJ7Sw';
-        $this->youtube->getVideoInfo($vID);
+        $this->youtube->getVideoInfo($vID, $this->parts);
     }
 
     public function testGetVideoInfo()
     {
         $vID = 'rie-hPVJ7Sw';
-        $response = $this->youtube->getVideoInfo($vID);
+        $response = $this->youtube->getVideoInfo($vID, $this->parts);
 
         $this->assertEquals($vID, $response->id);
         $this->assertNotNull('response');
@@ -103,7 +105,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testGetVideosInfo()
     {
         $vID = array('rie-hPVJ7Sw', 'lRRk97FYLJM');
-        $response = $this->youtube->getVideosInfo($vID);
+        $response = $this->youtube->getVideosInfo($vID, $this->parts);
         $this->assertInternalType('array', $response);
         
         foreach ($response as $value) {
@@ -201,7 +203,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
 
     public function testGetChannelByName()
     {
-        $response = $this->youtube->getChannelByName('Google', $this->optionParams);
+        $response = $this->youtube->getChannelByName('Google', $this->parts, $this->optionParams);
 
         $this->assertEquals('youtube#channel', $response->kind);
         //This is not a safe Assertion because the name can change, but include it anyway
@@ -216,7 +218,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testGetChannelById()
     {
         $channelId = 'UCk1SpWNzOs4MYmr0uICEntg';
-        $response = $this->youtube->getChannelById($channelId, $this->optionParams);
+        $response = $this->youtube->getChannelById($channelId, $this->parts, $this->optionParams);
 
         $this->assertEquals('youtube#channel', $response->kind);
         $this->assertEquals($channelId, $response->id);
@@ -228,7 +230,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testGetChannelsById()
     {
         $channels = array('UCk1SpWNzOs4MYmr0uICEntg', 'UCK8sQmJBp8GCxrOtXWBpyEA');
-        $response = $this->youtube->getChannelsById($channels, $this->optionParams);
+        $response = $this->youtube->getChannelsById($channels, $this->parts, $this->optionParams);
 
         $this->assertTrue(count($response) === 2);
         $this->assertEquals('youtube#channel', $response[0]->kind);
@@ -241,7 +243,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testGetPlaylistsByChannelId()
     {
         $GOOGLE_CHANNELID = 'UCK8sQmJBp8GCxrOtXWBpyEA';
-        $response = $this->youtube->getPlaylistsByChannelId($GOOGLE_CHANNELID, $this->optionParams);
+        $response = $this->youtube->getPlaylistsByChannelId($GOOGLE_CHANNELID, $this->parts, $this->optionParams);
 
         $this->assertTrue(count($response) > 0);
         $this->assertEquals('youtube#playlist', $response[0]->kind);
@@ -252,17 +254,17 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     {
         //get one of the playlist
         $GOOGLE_CHANNELID = 'UCK8sQmJBp8GCxrOtXWBpyEA';
-        $response = $this->youtube->getPlaylistsByChannelId($GOOGLE_CHANNELID);
+        $response = $this->youtube->getPlaylistsByChannelId($GOOGLE_CHANNELID, $this->parts);
         $playlist = $response[0];
 
-        $response = $this->youtube->getPlaylistById($playlist->id);
+        $response = $this->youtube->getPlaylistById($playlist->id, $this->parts);
         $this->assertEquals('youtube#playlist', $response->kind);
     }
 
     public function testGetPlaylistItemsByPlaylistId()
     {
         $GOOGLE_ZEITGEIST_PLAYLIST = 'PL590L5WQmH8fJ54F369BLDSqIwcs-TCfs';
-        $response = $this->youtube->getPlaylistItemsByPlaylistId($GOOGLE_ZEITGEIST_PLAYLIST);
+        $response = $this->youtube->getPlaylistItemsByPlaylistId($GOOGLE_ZEITGEIST_PLAYLIST, $this->parts);
 
         $this->assertTrue(count($response) > 0);
         $this->assertEquals('youtube#playlistItem', $response[0]->kind);
@@ -275,12 +277,12 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
             'playlistId' => $GOOGLE_ZEITGEIST_PLAYLIST,
             'part' => 'id, snippet'
         );
-        $response = $this->youtube->getPlaylistItemsByPlaylistIdAdvanced($params, true);
+        $response = $this->youtube->getPlaylistItemsByPlaylistIdAdvanced($params, $this->parts, true);
         $this->assertEquals('youtube#playlistItem', $response['results'][0]->kind);
         $this->assertEquals('youtube#playlistItemListResponse', $response['info']['kind']);
     }
 
-     /**
+    /**
      *
      * @expectedException \InvalidArgumentException
      */
@@ -328,7 +330,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testGetActivitiesByChannelId()
     {
         $GOOGLE_CHANNELID = 'UCK8sQmJBp8GCxrOtXWBpyEA';
-        $response = $this->youtube->getActivitiesByChannelId($GOOGLE_CHANNELID);
+        $response = $this->youtube->getActivitiesByChannelId($GOOGLE_CHANNELID, $this->parts);
         $this->assertTrue(count($response) > 0);
         $this->assertEquals('youtube#activity', $response[0]->kind);
         $this->assertEquals('Google', $response[0]->snippet->channelTitle);
@@ -340,7 +342,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testGetActivitiesByChannelIdException()
     {
         $channelId = '';
-        $response = $this->youtube->getActivitiesByChannelId($channelId);
+        $response = $this->youtube->getActivitiesByChannelId($channelId, $this->parts);
     }
 
     public function testGetChannelFromURL()
@@ -432,7 +434,7 @@ class YoutubeTest extends \PHPUnit_Framework_TestCase
     public function testNotFoundAPICall()
     {
         $vID = 'Utn7NBtbHL4'; //an deleted video
-        $response = $this->youtube->getVideoInfo($vID);
+        $response = $this->youtube->getVideoInfo($vID, $this->parts);
         $this->assertFalse($response);
     }
 }

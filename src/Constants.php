@@ -1,6 +1,6 @@
 <?php
 
-namespace Madcoda\Youtube;
+namespace Llupenn\Youtube;
 
 /**
  * Laravel users should use this class to access these constants

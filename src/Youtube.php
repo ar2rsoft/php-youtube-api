@@ -508,7 +508,7 @@ class Youtube
      * @throws \Exception
      * @return object Channel object
      */
-    public function getChannelFromURL($youtube_url)
+    public function getChannelFromURL($youtube_url, $parts)
     {
         if (strpos($youtube_url, 'youtube.com') === false) {
             throw new \Exception('The supplied URL does not look like a Youtube URL');
@@ -518,11 +518,11 @@ class Youtube
         if (strpos($path, '/channel') === 0) {
             $segments = explode('/', $path);
             $channelId = $segments[count($segments) - 1];
-            $channel = $this->getChannelById($channelId);
+            $channel = $this->getChannelById($channelId, $parts);
         } elseif (strpos($path, '/user') === 0) {
             $segments = explode('/', $path);
             $username = $segments[count($segments) - 1];
-            $channel = $this->getChannelByName($username);
+            $channel = $this->getChannelByName($username, $parts);
         } else {
             throw new \Exception('The supplied URL does not look like a Youtube Channel URL');
         }

@@ -1,6 +1,6 @@
 php-youtube-api
 ===============
-[![Build Status](https://secure.travis-ci.org/madcoda/php-youtube-api.png)](https://travis-ci.org/madcoda/php-youtube-api)
+[![Build Status](https://secure.travis-ci.org/llupenn/php-youtube-api.png)](https://travis-ci.org/llupenn/php-youtube-api)
 
 A basic PHP wrapper for the Youtube Data API v3 ( Non-OAuth ). Designed to let devs easily 
 fetch public data (Video, Channel, Playlists info) from Youtube. No 3rd party dependancy. (except PHPUnit)
@@ -18,22 +18,18 @@ Currently I will not consider adding OAuth endpoints. (those required "authorize
 ## Install
 Run the following command in your command line shell in your php project
 ```sh
-$ composer require madcoda/php-youtube-api:^1.2
+$ composer llupenn madcoda/php-youtube-api:^1.2
 ```
 Done.
 
 You may also edit composer.json manually then perform ```composer update```
 ```
 "require": {
-    "madcoda/php-youtube-api": "^1.2"
+    "llupenn/php-youtube-api": "^1.2"
 }
 ```
 
-## Getting started
-Please read the wiki on how to use this library with [PHP with composer](https://github.com/madcoda/php-youtube-api/wiki/started-with-php-composer), [Laravel 4](https://github.com/madcoda/php-youtube-api/wiki/started-with-laravel-4) and [Laravel 5](https://github.com/madcoda/php-youtube-api/wiki/started-with-laravel-5).
-
-For the functions implemented in this library, please visit [API Reference](https://github.com/madcoda/php-youtube-api/wiki/api-reference)
-
+#
 ### Example usage with pure PHP (with composer)
 ```php
 require 'vendor/autoload.php';
@@ -58,7 +54,7 @@ Please read the ["Reference" section](https://developers.google.com/youtube/v3/d
 
 ## Contact
 
-For bugs, complain and suggestions please [file an Issue here](https://github.com/madcoda/php-youtube-api/issues) 
+For bugs, complain and suggestions please [file an Issue here](https://github.com/llupenn/php-youtube-api/issues) 
 or send email to jason@madcoda.com :)
 
 

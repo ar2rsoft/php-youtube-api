@@ -515,11 +515,11 @@ class Youtube
         }
 
         $path = static::_parse_url_path($youtube_url);
-        if (strpos($path, '/channel') === 0) {
+        if (strpos($path, '/channel') !== false) {
             $segments = explode('/', $path);
             $channelId = $segments[count($segments) - 1];
             $channel = $this->getChannelById($channelId, $parts);
-        } elseif (strpos($path, '/user') === 0) {
+        } elseif (strpos($path, '/user') !== false) {
             $segments = explode('/', $path);
             $username = $segments[count($segments) - 1];
             $channel = $this->getChannelByName($username, $parts);
